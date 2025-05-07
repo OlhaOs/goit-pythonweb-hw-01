@@ -1,4 +1,10 @@
 from abc import ABC, abstractmethod
+import logging
+
+logging.basicConfig(
+    format='%(asctime)s %(message)s', 
+    level=logging.INFO
+        )
 
 class Book:
     def __init__(self, title, author, year):
@@ -51,10 +57,9 @@ class LibraryManager:
         books = self.library.get_all_books()
         if books:
             for book in books:
-                print(book)
+                logging.info(book)
         else: 
-            print ('Бібліотека порожня!')
-
+            logging.info ('Бібліотека порожня!')
 
 def main():
     library = Library()
@@ -77,7 +82,7 @@ def main():
             case "exit":
                 break
             case _:
-                print("Invalid command. Please try again.")
+                logging.info("Invalid command. Please try again.")
 
 if __name__ == "__main__":
     main()
