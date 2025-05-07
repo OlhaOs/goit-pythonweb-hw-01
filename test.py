@@ -1,45 +1,45 @@
-from abc import ABC, abstractmethod
+class Library:
+    def __init__(self):
+        self.books = []
 
-class Creator(ABC):
-    @abstractmethod
-    def create(self):
-        pass
+    def add_book(self, title, author, year):
+        book = {
+            "title": title,
+            "author": author,
+            "year": year
+        }
+        self.books.append(book)
 
-    def send_messages(self) -> str:
-        product = self.create()
-        result = product.sending()
-        return result
+    def remove_book(self, title):
+        for book in self.books:
+            if book["title"] == title:
+                self.books.remove(book)
+                break
 
-class SendingMessages(ABC):
-    @abstractmethod
-    def sending(self) -> str:
-        pass
+    def show_books(self):
+        for book in self.books:
+            print(f'Title: {book["title"]}, Author: {book["author"]}, Year: {book["year"]}')
 
-class CreatorPush(Creator):
-    def create(self) -> SendingMessages:
-        return SendingPushMessages()
-
-class CreatorSMS(Creator):
-    def create(self) -> SendingMessages:
-        return SendingSMSMessages()
-
-class SendingPushMessages(SendingMessages):
-    def sending(self) -> str:
-        return "Push mailing has been completed"
-
-class SendingSMSMessages(SendingMessages):
-    def sending(self) -> str:
-        return "SMS mailing has been completed"
-
-def client_code(creator: Creator) -> None:
-    print("We know nothing about the creator code that works")
-    result = creator.send_messages()
-    print(f"Result: {result}")
+def main():
+    library = Library()
+    
+    while True:
+        command = input("Enter command (add, remove, show, exit): ").strip().lower()
+        
+        if command == "add":
+            title = input("Enter book title: ").strip()
+            author = input("Enter book author: ").strip()
+            year = input("Enter book year: ").strip()
+            library.add_book(title, author, year)
+        elif command == "remove":
+            title = input("Enter book title to remove: ").strip()
+            library.remove_book(title)
+        elif command == "show":
+            library.show_books()
+        elif command == "exit":
+            break
+        else:
+            print("Invalid command. Please try again.")
 
 if __name__ == "__main__":
-    print("The application performs Push mailing lists.")
-    client_code(CreatorPush())
-    print("\\n")
-
-    print("The application performs SMS mailing.")
-    client_code(CreatorSMS())
+    main()

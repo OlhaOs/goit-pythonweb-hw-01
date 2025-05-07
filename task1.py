@@ -5,7 +5,6 @@ class Vehicle(ABC):
     def start_engine(self):
         pass
 
-
 class VehicleFactory(ABC):
 
     @abstractmethod
@@ -15,7 +14,6 @@ class VehicleFactory(ABC):
     @abstractmethod
     def create_motorcycle(self) -> Vehicle:
         pass
-
 
 class USVehicleFactory(VehicleFactory):
     def create_car(self, make, model):
@@ -30,7 +28,6 @@ class EUVehicleFactory(VehicleFactory):
 
     def create_motorcycle(self, make, model):
         return Motorcycle(make, model, "EU Spec")
-
 
 class Car(Vehicle):
     def __init__(self, make, model, spec): 
