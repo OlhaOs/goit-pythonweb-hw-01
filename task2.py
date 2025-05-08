@@ -1,10 +1,6 @@
 from abc import ABC, abstractmethod
-import logging
+from logger import logger
 
-logging.basicConfig(
-    format='%(asctime)s %(message)s', 
-    level=logging.INFO
-        )
 
 class Book:
     def __init__(self, title, author, year):
@@ -13,7 +9,8 @@ class Book:
         self.year = year
 
     def __str__(self):
-        return f'Title: {self.title}, Author: {self.author}, Year: {self.year}'
+        return f"Title: {self.title}, Author: {self.author}, Year: {self.year}"
+
 
 class LibraryInterface(ABC):
     @abstractmethod
@@ -21,13 +18,14 @@ class LibraryInterface(ABC):
         pass
 
     @abstractmethod
-    def remove_book(self, title:str):
+    def remove_book(self, title: str):
         pass
 
     @abstractmethod
     def get_all_books(self) -> list:
         pass
-        
+
+
 class Library(LibraryInterface):
 
     def __init__(self):
@@ -42,8 +40,9 @@ class Library(LibraryInterface):
     def get_all_books(self) -> list:
         return self.books
 
+
 class LibraryManager:
-    def __init__(self, library:LibraryInterface):
+    def __init__(self, library: LibraryInterface):
         self.library = library
 
     def add_book(self, title: str, author: str, year: str):
@@ -57,9 +56,10 @@ class LibraryManager:
         books = self.library.get_all_books()
         if books:
             for book in books:
-                logging.info(book)
-        else: 
-            logging.info ('Бібліотека порожня!')
+                logger.info(book)
+        else:
+            logger.info("Бібліотека порожня!")
+
 
 def main():
     library = Library()
@@ -82,7 +82,8 @@ def main():
             case "exit":
                 break
             case _:
-                logging.info("Invalid command. Please try again.")
+                logger.info("Invalid command. Please try again.")
+
 
 if __name__ == "__main__":
     main()

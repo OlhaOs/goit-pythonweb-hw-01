@@ -1,16 +1,12 @@
-from abc import  ABC, abstractmethod
-import logging
-
-logging.basicConfig(
-    format='%(asctime)s %(message)s', 
-    level=logging.INFO
-        )
+from abc import ABC, abstractmethod
+from logger import logger
 
 
 class Vehicle(ABC):
     @abstractmethod
-    def start_engine(self):
+    def start_engine(self) -> None:
         pass
+
 
 class VehicleFactory(ABC):
 
@@ -22,13 +18,15 @@ class VehicleFactory(ABC):
     def create_motorcycle(self) -> Vehicle:
         pass
 
+
 class USVehicleFactory(VehicleFactory):
     def create_car(self, make, model):
         return Car(make, model, "US Spec")
 
     def create_motorcycle(self, make, model):
         return Motorcycle(make, model, "US Spec")
-    
+
+
 class EUVehicleFactory(VehicleFactory):
     def create_car(self, make, model):
         return Car(make, model, "EU Spec")
@@ -36,14 +34,16 @@ class EUVehicleFactory(VehicleFactory):
     def create_motorcycle(self, make, model):
         return Motorcycle(make, model, "EU Spec")
 
+
 class Car(Vehicle):
-    def __init__(self, make, model, spec): 
+    def __init__(self, make, model, spec):
         self.make = make
         self.model = model
         self.spec = spec
 
     def start_engine(self):
-        logging.info(f"{self.make} {self.model} {self.spec}: Двигун запущено")
+        logger.info(f"{self.make} {self.model} {self.spec}: Двигун запущено")
+
 
 class Motorcycle(Vehicle):
     def __init__(self, make, model, spec):
@@ -52,7 +52,7 @@ class Motorcycle(Vehicle):
         self.spec = spec
 
     def start_engine(self):
-        logging.info(f"{self.make} {self.model} {self.spec}: Мотор заведено")
+        logger.info(f"{self.make} {self.model} {self.spec}: Мотор заведено")
 
 
 us_factory = USVehicleFactory()
@@ -63,6 +63,3 @@ vehicle1.start_engine()
 
 vehicle2 = eu_factory.create_motorcycle("Harley-Davidson", "Sportster")
 vehicle2.start_engine()
-
-
-
